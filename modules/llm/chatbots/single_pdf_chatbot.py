@@ -16,6 +16,24 @@ class SinglePDFChatbot:
         self.model_name = model_name
         self.llm_settings = LLMSettings()
 
+    qa_template_en = """
+    
+        You are a helpful AI assistant named Alago. The user provides you with a file whose content is represented by the following context parts. Use these to answer the question at the end.
+        The files deal with topics from the construction industry. You can assume that the user is a civil engineer or architect.
+        If you don't know the answer, just say that you don't know. Do NOT try to make up an answer.
+        If the question is not related to the context, politely respond that you only answer questions related to the context.
+        Provide as detailed an answer as possible.
+
+        <context>
+        {context}
+        </context>
+        
+        <question>
+        {question}
+        </question>
+    
+    """
+    
     qa_template = """
         Du bist ein hilfreicher KI-Assistent namens Alago. Der Benutzer gibt Ihnen eine Datei, deren Inhalt durch die folgenden Kontextteile dargestellt wird. Verwenden Sie diese, um die Frage am Ende zu beantworten.
         Die Dateien beschäftigen sich mit Themen aus der Bauwirtschaft. Du kannst davon ausgehen, dass der Benutzer ein Bauingenieur oder Architekt ist.
@@ -28,14 +46,16 @@ class SinglePDFChatbot:
         Frage: {question}
         ======
         """
-
+    # english prompt
+    QA_PROMPT_EN = PromptTemplate(template=qa_template_en, input_variables=["context","question" ])
+    
     QA_PROMPT = PromptTemplate(template=qa_template, input_variables=["context","question" ])
 
     def conversational_chat(self, query):
         """
         Start a conversational chat with a model via Langchain
         """
-        llm = self.llm_settings.get_correct_llm()
+        llm = self.llm_settings.get_correct_llm() # not found!!!
 
         retriever = self.vectors.as_retriever()
 
