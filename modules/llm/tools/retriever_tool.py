@@ -5,7 +5,19 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.tools import create_retriever_tool, Tool
 from langchain_openai import OpenAIEmbeddings
 
+# create a retriever
+def get_retriever(file_path: str):
+    loader = PyMuPDFLoader(file_path)
+    docs = loader.load()
+    documents = RecursiveCharacterTextSplitter(
+        chunk_size=1000, chunk_overlap=200
+    ).split_documents(docs)
+    vector = FAISS.from_documents(documents, OpenAIEmbeddings())
+    retriever = vector.as_retriever()
+    return retriever
 
+
+# create retriever as a tool
 def get_retriever_tool(file_path: str, tool_name: str, tool_description: str) -> Tool:
     loader = PyMuPDFLoader(file_path)
     docs = loader.load()

@@ -6,6 +6,6 @@ OPENAI_API_KEY='xxx'
 ANTHROPIC_API_KEY = 'xxx'
 
 # Langsmith API Key
-LANGCHAIN_API_KEY='xxx'
-LANGCHAIN_PROJECT='xxx'
+LANGCHAIN_API_KEY=''
+LANGCHAIN_PROJECT=''
 LANGCHAIN_ENDPOINT='https://api.smith.langchain.com'
